@@ -20,19 +20,27 @@ const server = http.createServer((req, res) => {
     }
 
     if (url ==='/message' && method === 'POST'){
+
+        // Create Streams and buffers
         const body = [];
         req.on('data', (chunk) => {
             console.log(chunk);
             body.push(chunk)
         });
-        req.on('end', () => {
+        // This is async operation 
+        return req.on('end', () => {
+            // `Buffer` is Object globally available by node js
             const parseBody = Buffer.concat(body).toString();
+            // message=<datainput>
             const message = parseBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
+            // writeFileSync will block execution the next line of code until it finished
+            // that why we use writeFile method
+            fs.writeFile('message.txt', message, err => {
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                return res.end();
+            });
         })
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
         
     }
     res.setHeader('Content-Type', 'text/html');
