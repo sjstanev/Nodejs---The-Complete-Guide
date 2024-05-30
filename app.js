@@ -1,12 +1,12 @@
 const http = require('http');
 
-// import module routes.js that return module.exports = requestHandler;
-const routes = require('./routes')
+const express = require('express');
 
-console.log(routes.text);
+//create express application
+const app = express();
 
-// Execute routes funtion for all incoming requests
-const server = http.createServer(routes.handler);
+// `app` is valid request server 
+const server = http.createServer(app);
 
 // Start listener on specific port
 server.listen(4000)
