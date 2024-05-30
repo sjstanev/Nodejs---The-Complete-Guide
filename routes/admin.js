@@ -1,10 +1,13 @@
+const path = require('path');
+const rootDir = require('../util/path')
+
 const express = require('express');
 
 const router = express.Router();
 
 // this route is recheable to /admin/add-product
 router.get('/add-product', (req, res, next) => {
-    res.send('<body><form action="/admin/add-product" method="POST"><input type="text" name="title"><button type="submit">Add Product</buttom></form></body>');
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 });
 
 // path is: /admin/add-product, we can use the same name 

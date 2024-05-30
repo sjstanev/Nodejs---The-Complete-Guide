@@ -1,7 +1,10 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 //create express application
 const app = express();
+
 
 // Now the router gets exported, so the router now has these two routes registered,
 // because we export it here and this is the object on which we registered these routes'
@@ -18,7 +21,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-    res.status(404).send('<h1>404 Page not found</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 })
 
 // Start listener on specific port
