@@ -14,8 +14,12 @@ const shopRoutes = require('./routes/shop');
 // body-parser deprecated undefined extended: provide extended option app.js:8:20
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(adminRoutes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+
+app.use((req, res, next) => {
+    res.status(404).send('<h1>404 Page not found</h1>');
+})
 
 // Start listener on specific port
 app.listen(4000);
