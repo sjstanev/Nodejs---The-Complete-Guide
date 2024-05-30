@@ -1,10 +1,11 @@
 const http = require('http');
 const fs = require('fs');
+const { BADFAMILY } = require('dns');
 
 // Create a web server
 const server = http.createServer((req, res) => {
 
-    console.log(req.url, req.method, req.headers);
+    //console.log(req.url, req.method, req.headers);
     //process.exit() //hard exit event loop
 
     const url =req.url;
@@ -19,7 +20,16 @@ const server = http.createServer((req, res) => {
     }
 
     if (url ==='/message' && method === 'POST'){
-        fs.writeFileSync('message.txt', 'DUMMY');
+        const body = [];
+        req.on('data', (chunk) => {
+            console.log(chunk);
+            body.push(chunk)
+        });
+        req.on('end', () => {
+            const parseBody = Buffer.concat(body).toString();
+            const message = parseBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
+        })
         res.statusCode = 302;
         res.setHeader('Location', '/');
         return res.end();
