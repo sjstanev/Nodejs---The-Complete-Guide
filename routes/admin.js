@@ -9,7 +9,7 @@ const products = [];
 
 // this route is recheable to /admin/add-product
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product'});
 });
 
 // path is: /admin/add-product, we can use the same name 
@@ -17,7 +17,6 @@ router.get('/add-product', (req, res, next) => {
 router.post('/add-product', (req, res, next) => {
     // to be able to parse the content of the body
     // we import module `body-parser` and using middleware `bodyParser.urlencoded()`
-    console.log(req.body);
     products.push({title: req.body.title});
     res.redirect('/')
 })

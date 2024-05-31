@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 //create express application
 const app = express();
 
+// here tell express which engine to use to render the html templates
+app.set('view engine', 'ejs')
+// where to find this templates
+app.set('views', 'views')
 
 // Now the router gets exported, so the router now has these two routes registered,
 // because we export it here and this is the object on which we registered these routes'
@@ -23,7 +27,7 @@ app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).render('404', {pageTitle: 'Page Not Found'});
 })
 
 // Start listener on specific port

@@ -1,18 +1,23 @@
-const path = require('path');
-
 const express = require('express');
 
-const rootDir = require('../util/path');
 const adminData = require('./admin');
-
 
 const router = express.Router();
 
+
 // add another middleware function 
 router.get('/', (req, res, next) => {
+    
+    //[ { title: 'first product' }, { title: 'testProduct' } ]
+    const products = adminData.products;
     console.log(adminData.products);
-    res.sendFile(path.join(rootDir, 'views', 'shop.html'))
-
+    
+    // we use this object to send data to views that must be render()
+    res.render('shop', {
+        pageTitle: 'Shop',
+        prods: products,
+        path: '/'
+    }); 
 });
 
 // Now the router gets exported, so the router now has that route registered,
