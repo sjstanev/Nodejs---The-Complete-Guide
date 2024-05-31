@@ -9,7 +9,7 @@ const app = express();
 // Now the router gets exported, so the router now has these two routes registered,
 // because we export it here and this is the object on which we registered these routes'
 // adminRoutes and showRoutes are Middleware function also
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // parse the requsted body
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 // we use this `static` method to give public access to files in the server
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
